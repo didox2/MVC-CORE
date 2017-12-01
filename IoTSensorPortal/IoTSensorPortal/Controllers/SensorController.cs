@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Threading.Tasks;
 
 namespace IoTSensorPortal.Controllers
 {
@@ -40,9 +39,17 @@ namespace IoTSensorPortal.Controllers
         }
 
         [Authorize]
-        public ActionResult EditSensor()
+        public ActionResult EditSensor(long id)
         {
-            return this.View();
+            var userId = this.userManager.GetUserId(this.User);
+            var sensor = this.service.GetSensor(id);
+
+            if (userId == sensor.OwnerId)
+            {
+                return this.View(sensor);
+            }
+
+            return RedirectToAction("MySensors");
         }
 
         [Authorize, ValidateAntiForgeryToken, HttpPost]
@@ -50,11 +57,21 @@ namespace IoTSensorPortal.Controllers
         {
             if (this.ModelState.IsValid)
             {
-                this.service.EditSensor(model);
+                var userId = this.userManager.GetUserId(this.User);
+                this.service.EditSensor(model, userId);
                 return this.RedirectToAction("MySensors");
             };
 
             return this.View();
+        }
+
+        [Authorize]
+        public ActionResult Delete(long id)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            this.service.DeleteSensor(id, userId);
+
+            return RedirectToAction("MySensors");
         }
 
         [Authorize]

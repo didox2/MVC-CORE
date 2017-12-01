@@ -35,7 +35,8 @@ namespace IoTSensorPortal.Core
                 Name = model.Name,
                 RefreshRate = model.RefreshRate,
                 Url = model.Url,
-                OwnerId = model.OwnerId
+                OwnerId = model.OwnerId,
+                Owner = this.userRepository.GetById(model.OwnerId)
             };
 
             this.sensorRepository.Add(sensor);
@@ -45,24 +46,32 @@ namespace IoTSensorPortal.Core
             return sensor.Id;
         }
 
-        public void DeleteSensor(long id)
+        public void DeleteSensor(long sensorId, string userId)
         {
-            this.sensorRepository.Delete(id);
+            var sensor = this.sensorRepository.GetById(sensorId);
+            if (sensor.OwnerId == userId)
+            {
+                this.sensorRepository.Delete(sensorId);
 
-            this.sensorRepository.SaveChanges();
+                this.sensorRepository.SaveChanges();
+            }
         }
 
-        public void EditSensor(SensorViewModel model)
+        public void EditSensor(SensorViewModel model, string userId)
         {
-            var item = this.sensorRepository.GetById(model.Id);
+            if (this.userRepository.GetById(userId).UserName == model.OwnerId)
+            {
+                var item = this.sensorRepository.GetById(model.Id);
 
-            item.IsPublic = model.IsPublic;
-            item.MaxValue = model.MaxValue;
-            item.MinValue = model.MinValue;
-            item.Name = model.Name;
-            item.RefreshRate = model.RefreshRate;
+                item.Url = model.Url;
+                item.IsPublic = model.IsPublic;
+                item.MaxValue = model.MaxValue;
+                item.MinValue = model.MinValue;
+                item.Name = model.Name;
+                item.RefreshRate = model.RefreshRate;
 
-            this.sensorRepository.SaveChanges();
+                this.sensorRepository.SaveChanges();
+            }
         }
 
         public IEnumerable<SensorViewModel> GetMySensors(string userId)

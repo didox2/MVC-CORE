@@ -9,7 +9,7 @@ namespace IoTSensorPortal.Core.Contracts
     {
         long CreateSensor(SensorViewModel model);
 
-        void EditSensor(SensorViewModel model);
+        void EditSensor(SensorViewModel model, string userId);
 
         IEnumerable<SensorViewModel> GetMySensors(string userId);
         
@@ -19,6 +19,6 @@ namespace IoTSensorPortal.Core.Contracts
         
         SensorViewModel GetSensor(long id);
 
-        void DeleteSensor(long id);
+        void DeleteSensor(long sensorId, string userId);
     }
 }

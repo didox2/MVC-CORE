@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IoTSensorPortal.Core;
+using IoTSensorPortal.Core.Contracts;
+using IoTSensorPortal.Infrastructure.Data.Contexts;
+using IoTSensorPortal.Infrastructure.Data.Contracts;
+using IoTSensorPortal.Infrastructure.Data.Models;
+using IoTSensorPortal.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using IoTSensorPortal.Data;
-using IoTSensorPortal.Models;
-using IoTSensorPortal.Services;
 
 namespace IoTSensorPortal
 {
@@ -26,15 +25,19 @@ namespace IoTSensorPortal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<IoTSensorPortalContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<IoTSensorPortalContext>()
                 .AddDefaultTokenProviders();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+
+            services.AddScoped<IIoTSensorPortalService, IoTSensorPortalService>();
+
+            services.AddScoped(typeof(IRDBERepository<>), typeof(RDBERepository<>));
 
             services.AddMvc();
         }

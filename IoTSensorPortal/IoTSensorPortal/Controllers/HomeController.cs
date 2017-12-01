@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IoTSensorPortal.Models;
 using Microsoft.AspNetCore.Mvc;
-using IoTSensorPortal.Models;
+using System.Diagnostics;
 
 namespace IoTSensorPortal.Controllers
 {

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTSensorPortal", "IoTSensorPortal\IoTSensorPortal.csproj", "{DFD66D0F-B946-4F0F-ADE0-B209F62DAB72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTSensorPortal", "IoTSensorPortal\IoTSensorPortal.csproj", "{DFD66D0F-B946-4F0F-ADE0-B209F62DAB72}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTSensorPortal.Core", "IoTSensorPortal.Core\IoTSensorPortal.Core.csproj", "{C676DBE3-FD5F-42BB-AD28-BECEC4F2F1AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTSensorPortal.Infrastructure.Data", "IoTSensorPortal.Infrastructure.Data\IoTSensorPortal.Infrastructure.Data.csproj", "{1E7EACEF-C7E6-4375-B3C6-CC0A9F7F7225}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{DFD66D0F-B946-4F0F-ADE0-B209F62DAB72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFD66D0F-B946-4F0F-ADE0-B209F62DAB72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFD66D0F-B946-4F0F-ADE0-B209F62DAB72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C676DBE3-FD5F-42BB-AD28-BECEC4F2F1AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C676DBE3-FD5F-42BB-AD28-BECEC4F2F1AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C676DBE3-FD5F-42BB-AD28-BECEC4F2F1AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C676DBE3-FD5F-42BB-AD28-BECEC4F2F1AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E7EACEF-C7E6-4375-B3C6-CC0A9F7F7225}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E7EACEF-C7E6-4375-B3C6-CC0A9F7F7225}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E7EACEF-C7E6-4375-B3C6-CC0A9F7F7225}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E7EACEF-C7E6-4375-B3C6-CC0A9F7F7225}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

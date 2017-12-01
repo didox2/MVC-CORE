@@ -1,0 +1,66 @@
+﻿@model IoTSensorPortal.Core.Models.SensorViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SensorViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Url)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Url)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RefreshRate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RefreshRate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MinValue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MinValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxValue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaxValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPublic)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsPublic)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentValue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdated)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new {  id = Model.Id  }) |
+    <a asp-action="Index">Back to List</a>
+</div>

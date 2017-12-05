@@ -3,6 +3,7 @@ using IoTSensorPortal.Core.Contracts;
 using IoTSensorPortal.Infrastructure.Data.Contexts;
 using IoTSensorPortal.Infrastructure.Data.Contracts;
 using IoTSensorPortal.Infrastructure.Data.Models;
+using IoTSensorPortal.Infrastructure.Data.Providers;
 using IoTSensorPortal.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +29,14 @@ namespace IoTSensorPortal
             services.AddDbContext<IoTSensorPortalContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            })
                 .AddEntityFrameworkStores<IoTSensorPortalContext>()
                 .AddDefaultTokenProviders();
 
@@ -36,6 +44,8 @@ namespace IoTSensorPortal
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddScoped<IIoTSensorPortalService, IoTSensorPortalService>();
+
+            services.AddScoped<ISensorDataProvider, SensorDataProvider>();
 
             services.AddScoped(typeof(IRDBERepository<>), typeof(RDBERepository<>));
 
@@ -62,6 +72,10 @@ namespace IoTSensorPortal
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

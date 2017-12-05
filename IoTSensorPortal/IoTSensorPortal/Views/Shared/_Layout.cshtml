@@ -30,14 +30,32 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Sensor" asp-action="AllPublicSensors">Public Sensors</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="Sensor" asp-action="AllPublicSensors">View Public Sensors</a></li>
                     @if (User.Identity.IsAuthenticated == true)
                     {
-                    <li><a asp-area="" asp-controller="Sensor" asp-action="CreateSensor">Create Sensor</a></li>
-                    <li><a asp-area="" asp-controller="Sensor" asp-action="MySensors">My Sensors</a></li>
+                        if (User.Claims.Any(s=>s.Value == "Admin"))
+                        {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="Admin" asp-controller="Admin" asp-action="EditSensors">Edit Sensors</a></li>
+                                <li><a asp-area="Admin" asp-controller="Admin" asp-action="EditUsers">Edit Users</a></li>
+                                <li><a asp-area="" asp-controller="Sensor" asp-action="CreateSensor">Create Sensor</a></li>
+                                <li><a asp-area="" asp-controller="Sensor" asp-action="MySensors">My Sensors</a></li>
+                            </ul>
+                        </li>
+                        }
+                        else
+                        {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Sensor" asp-action="CreateSensor">Create Sensor</a></li>
+                                <li><a asp-area="" asp-controller="Sensor" asp-action="MySensors">My Sensors</a></li>
+                            </ul>
+                        </li>
+                        }
                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")

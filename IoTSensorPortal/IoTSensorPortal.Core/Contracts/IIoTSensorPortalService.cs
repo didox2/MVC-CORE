@@ -1,7 +1,5 @@
 ﻿using IoTSensorPortal.Core.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace IoTSensorPortal.Core.Contracts
 {
@@ -20,5 +18,13 @@ namespace IoTSensorPortal.Core.Contracts
         SensorViewModel GetSensor(long id);
 
         void DeleteSensor(long sensorId, string userId);
+
+        UserViewModel GetUser(string id);
+
+        IEnumerable<UserViewModel> GetUsers();
+
+        void EditUser(UserViewModel model);
+
+        void DeleteUser(string id);
     }
 }

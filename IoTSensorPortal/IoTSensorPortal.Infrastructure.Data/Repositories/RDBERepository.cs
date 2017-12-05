@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace IoTSensorPortal.Infrastructure.Data.Repositories
 {
@@ -16,17 +17,6 @@ namespace IoTSensorPortal.Infrastructure.Data.Repositories
     public class RDBERepository<T> : IRDBERepository<T> where T : class
     {
         /// <summary>
-        /// Entity framework DB context holding connection information and properties
-        /// and tracking entity states 
-        /// </summary>
-        protected DbContext Context { get; set; }
-
-        /// <summary>
-        /// Representation of table in database
-        /// </summary>
-        protected DbSet<T> DbSet { get; set; }
-
-        /// <summary>
         /// Public constructor to inject dependancies into the repository
         /// </summary>
         /// <param name="context">EF context to inject</param>
@@ -36,6 +26,17 @@ namespace IoTSensorPortal.Infrastructure.Data.Repositories
             this.DbSet = context.Set<T>();
         }
 
+        /// <summary>
+        /// Entity framework DB context holding connection information and properties
+        /// and tracking entity states 
+        /// </summary>
+        protected DbContext Context { get; set; }
+
+        /// <summary>
+        /// Representation of table in database
+        /// </summary>
+        protected DbSet<T> DbSet { get; set; }
+        
         /// <summary>
         /// Adds entity to the database
         /// </summary>

@@ -5,6 +5,10 @@ namespace IoTSensorPortal.Core.Contracts
 {
     public interface IIoTSensorPortalService
     {
+        void Update();
+
+        IEnumerable<T> GetAllSensorsInfo<T>();
+        
         long CreateSensor(SensorViewModel model);
 
         void EditSensor(SensorViewModel model, string userId);

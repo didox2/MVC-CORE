@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTSensorPortal", "IoTSenso
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTSensorPortal.Core", "IoTSensorPortal.Core\IoTSensorPortal.Core.csproj", "{C676DBE3-FD5F-42BB-AD28-BECEC4F2F1AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTSensorPortal.Infrastructure.Data", "IoTSensorPortal.Infrastructure.Data\IoTSensorPortal.Infrastructure.Data.csproj", "{1E7EACEF-C7E6-4375-B3C6-CC0A9F7F7225}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IoTSensorPortal.Infrastructure.Data", "IoTSensorPortal.Infrastructure.Data\IoTSensorPortal.Infrastructure.Data.csproj", "{1E7EACEF-C7E6-4375-B3C6-CC0A9F7F7225}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,6 +2,7 @@
 using IoTSensorPortal.Core.Models;
 using IoTSensorPortal.Infrastructure.Data.Contracts;
 using IoTSensorPortal.Infrastructure.Data.Models;
+using IoTSensorPortal.Infrastructure.Data.Providers;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,20 @@ namespace IoTSensorPortal.Core
         private readonly IRDBERepository<History> historyRepository;
         private readonly IRDBERepository<ApplicationUser> userRepository;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ISensorDataProvider dataProvider;
 
         public IoTSensorPortalService(IRDBERepository<Sensor> sensorRepository,
                                         IRDBERepository<History> historyRepository,
                                         IRDBERepository<ApplicationUser> userRepository,
-                                        UserManager<ApplicationUser> userManager)
+                                        UserManager<ApplicationUser> userManager,
+                                        ISensorDataProvider dataProvider)
         {
 
             this.sensorRepository = sensorRepository ?? throw new ArgumentNullException("sensorRepository");
             this.historyRepository = historyRepository ?? throw new ArgumentNullException("historyRepository");
             this.userRepository = userRepository ?? throw new ArgumentNullException("userRepository");
             this.userManager = userManager ?? throw new ArgumentNullException("userManager");
+            this.dataProvider = dataProvider ?? throw new ArgumentNullException("dataProvider");
         }
 
         #region SensorMethods
@@ -240,8 +244,6 @@ namespace IoTSensorPortal.Core
             this.userRepository.SaveChanges();
         }
 
-        #endregion
-
         private bool IsAdmin(string userName)
         {
             var user = this.userManager.FindByNameAsync(userName).Result;
@@ -250,5 +252,20 @@ namespace IoTSensorPortal.Core
 
             return isAdmin;
         }
+        #endregion
+
+        #region Provider
+
+        public void Update()
+        {
+            this.dataProvider.Update();
+        }
+
+        public IEnumerable<T> GetAllSensorsInfo<T>()
+        {
+            return this.dataProvider.GetAllSensorsInfo<T>();
+        }
+
+        #endregion
     }
 }

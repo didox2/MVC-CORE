@@ -13,18 +13,18 @@ namespace IoTSensorPortal.Controllers
     {
         private readonly IIoTSensorPortalService service;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ISensorDataProvider provider;
 
         public SensorController(IIoTSensorPortalService service, UserManager<ApplicationUser> userManager, ISensorDataProvider provider)
         {
             this.service = service ?? throw new ArgumentNullException("service");
             this.userManager = userManager ?? throw new ArgumentNullException("userManager");
-            this.provider = provider ?? throw new ArgumentNullException("provider");
         }
 
         [Authorize]
         public ActionResult CreateSensor()
         {
+            //var sensor = new SensorViewModel();
+            //sensor.Urls = this.service.GetAllSensorsInfo<Urls>();
             return this.View();
         }
 
@@ -103,7 +103,7 @@ namespace IoTSensorPortal.Controllers
 
         public void Run()
         {
-            this.provider.Update();
+            this.service.Update();
         }
 
     }

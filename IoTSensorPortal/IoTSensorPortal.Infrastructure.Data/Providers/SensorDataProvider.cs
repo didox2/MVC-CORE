@@ -3,6 +3,7 @@ using IoTSensorPortal.Infrastructure.Data.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace IoTSensorPortal.Infrastructure.Data.Providers
 {
@@ -26,6 +27,17 @@ namespace IoTSensorPortal.Infrastructure.Data.Providers
             if (response.IsSuccessStatusCode)
             {
                 var result = response.Content.ReadAsStringAsync().Result;
+
+
+                //string path = @"c:\MyTest.txt";
+
+                //// This text is added only once to the file.
+                //if (File.Exists(path))
+                //{
+                //    File.WriteAllText(path, result);
+                //}
+
+
                 sensorsInfo = JsonConvert.DeserializeObject<List<T>>(result);
             }
 

@@ -23,8 +23,6 @@ namespace IoTSensorPortal.Controllers
         [Authorize]
         public ActionResult CreateSensor()
         {
-            //var sensor = new SensorViewModel();
-            //sensor.Urls = this.service.GetAllSensorsInfo<Urls>();
             return this.View();
         }
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace IoTSensorPortal.Core.Models
+﻿namespace IoTSensorPortal.Core.Models
 {
     public class UserViewModel
     {

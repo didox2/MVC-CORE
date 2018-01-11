@@ -2,12 +2,10 @@
 using IoTSensorPortal.Core.Models;
 using IoTSensorPortal.Infrastructure.Data.Contracts;
 using IoTSensorPortal.Infrastructure.Data.Models;
-using IoTSensorPortal.Infrastructure.Data.Providers;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 
 namespace IoTSensorPortal.Core
 {
@@ -56,12 +54,15 @@ namespace IoTSensorPortal.Core
             return sensor.Id;
         }
 
-        public void DeleteSensor(long sensorId, string userName)
+        public void DeleteSensor(long sensorId, string userId)
         {
-            bool isAdmin = IsAdmin(userName);
+            var user = GetApplicationUser(userId);
+
+            bool isAdmin = IsUserAdmin(user);
 
             var sensor = this.sensorRepository.GetById(sensorId);
-            if (sensor.OwnerId == userName || isAdmin)
+
+            if (sensor.OwnerId == userId || isAdmin)
             {
                 this.sensorRepository.Delete(sensorId);
 
@@ -71,9 +72,9 @@ namespace IoTSensorPortal.Core
 
         public void EditSensor(SensorViewModel model, string userId)
         {
-            var user = this.userRepository.GetById(userId);
+            var user = GetApplicationUser(userId);
 
-            var isAdmin = IsAdmin(user.UserName);
+            var isAdmin = IsUserAdmin(user);
 
             if ((user.UserName == model.OwnerId) || isAdmin)
             {
@@ -176,31 +177,30 @@ namespace IoTSensorPortal.Core
 
         public void EditUser(UserViewModel model)
         {
-            var applicationUser = this.userRepository.GetById(model.Id);
+            var applicationUser = GetApplicationUser(model.Id);
 
             applicationUser.Email = model.Email;
             applicationUser.UserName = model.Username;
 
-            var claim = new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "Admin");
-
             if (model.IsAdmin == true)
             {
-                this.userManager.AddClaimAsync(applicationUser, claim).Wait();
+                this.userManager.AddToRoleAsync(applicationUser, "Admin").Wait();
             }
 
             else
             {
-                this.userManager.RemoveClaimAsync(applicationUser, claim).Wait();
+                this.userManager.RemoveFromRoleAsync(applicationUser, "Admin").Wait();
             }
-            this.userRepository.SaveChanges();
 
-            this.userManager.UpdateAsync(applicationUser);
+            //this.userRepository.SaveChanges();
+
+            //this.userManager.UpdateAsync(applicationUser);
         }
 
         public UserViewModel GetUser(string id)
         {
             var user = this.userRepository.GetById(id);
-            bool isAdmin = IsAdmin(user.UserName);
+            bool isAdmin = IsUserAdmin(user);
 
             var item = new UserViewModel
             {
@@ -221,7 +221,7 @@ namespace IoTSensorPortal.Core
 
             foreach (var user in users)
             {
-                isAdmin = IsAdmin(user.UserName);
+                isAdmin = IsUserAdmin(user);
 
                 result.Add(new UserViewModel()
                 {
@@ -235,23 +235,25 @@ namespace IoTSensorPortal.Core
             return result;
         }
 
-        public void DeleteUser(string id)
+        public void DeleteUser(string userId)
         {
-            var user = this.userRepository.GetById(id);
+            var user = GetApplicationUser(userId);
 
             this.userRepository.Delete(user);
 
             this.userRepository.SaveChanges();
         }
 
-        private bool IsAdmin(string userName)
+        private ApplicationUser GetApplicationUser(string userId)
         {
-            var user = this.userManager.FindByNameAsync(userName).Result;
-
-            bool isAdmin = this.userManager.GetClaimsAsync(user).Result.Select(s => s.Value == "Admin").Any() ? true : false;
-
-            return isAdmin;
+            return this.userRepository.GetById(userId);
         }
+
+        private bool IsUserAdmin(ApplicationUser user)
+        {
+            return this.userManager.IsInRoleAsync(user, "Admin").Result;
+        }
+
         #endregion
 
         #region Provider
